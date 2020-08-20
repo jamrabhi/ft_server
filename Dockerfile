@@ -20,6 +20,7 @@ mv /tmp/phpMyAdmin-5.0.2-all-languages /var/www/ft_server/phpmyadmin
 RUN service mysql start && \
 	mysql -e "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'pass'" && \
 	mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost'" && \
+	mysql -e "CREATE DATABASE wordpress" && \
 	mysql -e "FLUSH PRIVILEGES"
 
 RUN wget https://wordpress.org/wordpress-5.5.tar.gz -P /tmp/ && \
