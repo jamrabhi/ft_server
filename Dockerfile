@@ -2,11 +2,14 @@ FROM debian:buster
 
 LABEL maintainer="jamrabhi@student.42.fr"
 
+#INSTALLATION DES PAQUETS
 RUN apt update && \
 	apt install -y nginx \
 	mariadb-server \
 	php-fpm php-mysql \
 	wget
+
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=FR/L=Paris/O=42/CN=localhost"
 
 COPY srcs/ft_server_conf /etc/nginx/sites-available/
 
@@ -25,3 +28,12 @@ RUN service mysql start && \
 
 RUN wget https://wordpress.org/wordpress-5.5.tar.gz -P /tmp/ && \
 	tar -xvf /tmp/wordpress-5.5.tar.gz -C /var/www/ft_server/
+
+COPY srcs/wp-config.php /var/www/ft_server/wordpress/
+
+COPY srcs/service_starter.sh /tmp/
+
+CMD service nginx start && \
+	service php7.3-fpm start && \
+	service mysql start && \
+	sleep infinity
