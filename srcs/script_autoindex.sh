@@ -3,7 +3,7 @@
 if [ "$INDEX" = "on" ]
 	then
 		sed -i 's/autoindex off/autoindex on/' /etc/nginx/sites-available/ft_server_conf
-		rm /var/www/ft_server/index.nginx-debian.html
+		rm -rf /var/www/ft_server/index.nginx-debian.html
 		service nginx reload
 elif [ "$INDEX" = "off" ]
 	then
