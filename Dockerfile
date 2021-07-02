@@ -37,8 +37,14 @@ RUN wget https://wordpress.org/wordpress-5.5.tar.gz -P /tmp/ && \
 
 COPY srcs/wp-config.php /var/www/ft_server/wordpress/
 
-#SERVICES LAUNCH
+#SERVICES LAUNCH & CHECK AUTOINDEX
+COPY srcs/script_autoindex.sh /.
+
+ENV INDEX=on
+
 CMD service nginx start && \
 	service php7.3-fpm start && \
 	service mysql start && \
+	bash script_autoindex.sh && \
 	sleep infinity
+
